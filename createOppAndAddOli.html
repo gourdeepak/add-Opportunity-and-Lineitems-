@@ -1,0 +1,63 @@
+<template>
+    <lightning-card>
+        <lightning-record-edit-form object-api-name="Opportunity" onsuccess={handleSuccess}>
+            <lightning-input-field field-name="AccountId" value={recordId} disabled= true></lightning-input-field>
+            <lightning-input-field field-name="Name"></lightning-input-field>
+            <lightning-input-field field-name="StageName"></lightning-input-field>
+            <lightning-input-field field-name="CloseDate"></lightning-input-field>
+            <lightning-button type="submit" label={label} variant="brand" onclick={handleclick}></lightning-button>
+        </lightning-record-edit-form>
+        <template if:true={showsearch}>
+            <lightning-input type="search" onchange={handleChange} placeholder="Search Product"></lightning-input>
+        </template>
+        <template if:true={showtable}>
+            <table>
+                <thead>
+                    <tr>
+                    <th>
+                        Product Name
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <template for:each={productList} for:item="pro">
+                        <tr key={pro.Id}>
+                            <td>
+                                <lightning-input type="checkbox" label={pro.Name} value={pro.Id} onchange={handlecheckboxclick}></lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <lightning-button label="Next" variant="brand" onclick={handleNextclick}></lightning-button>
+        </template>
+        
+    </lightning-card>
+    <template if:true={showSelectedProducts}>
+    <lightning-card title="Add Products">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+                <template for:each={selectedProducts} for:item="SP" for:index="index">
+                    <tr key = {SP.id}>
+                        <td><lightning-input  type="text" value={SP.id} access-key={index}  disabled="true" hidden></lightning-input></td>
+                        <td><lightning-input type="text" value={SP.Name} accesskey={index}  disabled="true"></lightning-input></td>
+                        <td><lightning-input type="Number" name="ProQuantity" accesskey={index} id={SP.id}  onchange={handleInputChange}></lightning-input></td>
+                        
+                        <td><lightning-input type="Number" name="ProAmount" access-key={index}   onchange={handleInputChange}></lightning-input></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        <lightning-button label="save" variant="brand" onclick={saveoli}></lightning-button>
+    </lightning-card>
+</template>
+</template>
